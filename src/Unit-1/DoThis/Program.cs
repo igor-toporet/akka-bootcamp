@@ -2,20 +2,15 @@
 
 namespace WinTail
 {
-    class Program
+    public static class Program
     {
-        public static ActorSystem MyActorSystem;
+        private static readonly ActorSystem MyActorSystem = ActorSystem.Create("MyActorSystem");
 
-        static void Main(string[] args)
+        public static void Main()
         {
-            // initialize MyActorSystem
-            MyActorSystem = ActorSystem.Create("MyActorSystem");
-
-            var consoleWriterActor = MyActorSystem.ActorOf(Props.Create(() =>
-                new ConsoleWriterActor()));
-
-            var consoleReaderActor = MyActorSystem.ActorOf(Props.Create(() =>
-                new ConsoleReaderActor(consoleWriterActor)));
+            var consoleWriterActor = MyActorSystem.ActorOf(Props.Create(() => new ConsoleWriterActor()));
+            var validationActor = MyActorSystem.ActorOf(Props.Create(() => new ValidationActor(consoleWriterActor)));
+            var consoleReaderActor = MyActorSystem.ActorOf(Props.Create(() => new ConsoleReaderActor(validationActor)));
 
             // tell console reader to begin
             consoleReaderActor.Tell(ConsoleReaderActor.StartCommand);
