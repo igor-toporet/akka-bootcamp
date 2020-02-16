@@ -20,6 +20,7 @@ namespace WinTail
             {
                 Console.ForegroundColor = ConsoleColor.Green;
                 Console.WriteLine(success.Reason);
+                Console.WriteLine();
             }
             else
             {

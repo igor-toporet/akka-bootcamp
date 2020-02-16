@@ -32,11 +32,8 @@ namespace WinTail
 
         private void DoPrintInstructions()
         {
-            Console.WriteLine("Write whatever you want into the console!");
-            Console.WriteLine("Some entries will pass validation, and some won't...");
-            Console.WriteLine();
-            Console.WriteLine();
-            Console.WriteLine("Type 'exit' to quit this application at any time.");
+            Console.WriteLine("Please provide the URI of a log file on disk.");
+
             Console.WriteLine();
         }
 
@@ -48,8 +45,7 @@ namespace WinTail
         {
             var message = Console.ReadLine();
 
-            if (!string.IsNullOrEmpty(message) &&
-                String.Equals(message, ExitCommand, StringComparison.OrdinalIgnoreCase))
+            if (string.Equals(message, ExitCommand, StringComparison.OrdinalIgnoreCase))
             {
                 // shut down the entire actor system (allows the process to exit)
                 Context.System.Terminate();
